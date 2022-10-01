@@ -46,6 +46,11 @@ function Install-Fabric {
     Write-Host "Install Fabric API For 1.19.2" -ForegroundColor Yellow
     New-Item -ItemType Directory -Force -Path "$($env:APPDATA)\.minecraft\mods" | Out-Null
     Start-BitsTransfer -Source "https://mediafiles.forgecdn.net/files/4006/117/fabric-api-0.62.0%2B1.19.2.jar" -Destination "$($env:APPDATA)\.minecraft\mods\fabric-api-0.62.0+1.19.2.jar"
+    Write-Host "Download Mods.." -ForegroundColor Yellow
+    Start-BitsTransfer -Source "https://drive.google.com/u/1/uc?id=1-883r5a0T5WD4wytgAUiBHmN-Se62_mr&export=download&confirm=t&uuid=6eb71ab4-3de3-42bf-ae80-82221b2ac962" -Destination "Better_MC_[FABRIC]-1.19.2.zip"
+    Write-Host "Unzip Mods" -ForegroundColor Yellow
+    Expand-Archive -Path '.\Better_MC_`[FABRIC`]-1.19.2.zip' -DestinationPath "$($env:APPDATA)\.minecraft" -Force
+    Write-Host "Done." -ForegroundColor Green
 }
 Install-Fabric
 pause
