@@ -51,6 +51,11 @@ function Install-Fabric {
         Write-Host "Found Mods folder" -ForegroundColor Green
         $confirmation_delete_mods_folder = Read-Host "Do you want delete mods folder (y/n)"
         if ($confirmation_delete_mods_folder -eq 'y') {
+            Remove-Item "$($env:APPDATA)\.minecraft\config" -Force -Recurse
+            Remove-Item "$($env:APPDATA)\.minecraft\kubejs" -Force -Recurse
+            Remove-Item "$($env:APPDATA)\.minecraft\paintings" -Force -Recurse
+            Remove-Item "$($env:APPDATA)\.minecraft\resourcepacks" -Force -Recurse
+            Remove-Item "$($env:APPDATA)\.minecraft\shaderpacks" -Force -Recurse
             Remove-Item "$($env:APPDATA)\.minecraft\mods" -Force -Recurse
         }
     }
