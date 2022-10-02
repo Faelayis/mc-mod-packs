@@ -60,7 +60,7 @@ function Install-Fabric {
         }
     }
     New-Item -ItemType Directory -Force -Path "$($env:APPDATA)\.minecraft\mods" | Out-Null
-    Start-BitsTransfer -Source "https://mediafiles.forgecdn.net/files/4006/117/fabric-api-0.62.0%2B1.19.2.jar" -Destination "$($env:APPDATA)\.minecraft\mods\fabric-api-0.62.0+1.19.2.jar"
+    # Start-BitsTransfer -Source "https://mediafiles.forgecdn.net/files/4006/117/fabric-api-0.62.0%2B1.19.2.jar" -Destination "$($env:APPDATA)\.minecraft\mods\fabric-api-0.62.0+1.19.2.jar"
     Write-Host "Download Mods.." -ForegroundColor Yellow
     Start-BitsTransfer -Source "https://github.com/Faelayis/mc-mod-packs/releases/download/Part-1/Valhelsia.Enhanced.Vanilla.zip" -Destination "mods.zip"
     Write-Host "Unzip Mods" -ForegroundColor Yellow
