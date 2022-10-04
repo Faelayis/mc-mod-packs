@@ -54,8 +54,6 @@ function Install-Fabric {
             Remove-Item "$($env:APPDATA)\.minecraft\config" -Force -Recurse | Out-Null
             Remove-Item "$($env:APPDATA)\.minecraft\kubejs" -Force -Recurse | Out-Null
             Remove-Item "$($env:APPDATA)\.minecraft\paintings" -Force -Recurse | Out-Null
-            Remove-Item "$($env:APPDATA)\.minecraft\resourcepacks" -Force -Recurse | Out-Null
-            Remove-Item "$($env:APPDATA)\.minecraft\shaderpacks" -Force -Recurse | Out-Null
             Remove-Item "$($env:APPDATA)\.minecraft\mods" -Force -Recurse | Out-Null
         }
     }
