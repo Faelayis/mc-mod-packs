@@ -5,7 +5,7 @@ Write-Host "$($OrangeForeColor)Version 1.1.0"
 function Install-Java {
     Write-Output "" 
     Import-Module BitsTransfer -Force
-    Start-BitsTransfer -Source "https://javadl.oracle.com/webapps/download/AutoDL?BundleId=246808_424b9da4b48848379167015dcc250d8d" -Destination "jre-8u341-windows-x64.exe"
+    Start-BitsTransfer -Priority High -Source "https://javadl.oracle.com/webapps/download/AutoDL?BundleId=246808_424b9da4b48848379167015dcc250d8d" -Destination "jre-8u341-windows-x64.exe"
     Write-Host "Install Java 8 for 64 bit Please Wait.." -ForegroundColor Yellow
     Start-Process -FilePath "jre-8u341-windows-x64.exe" -ArgumentList "INSTALL_SILENT=Enable" -Wait
 }
@@ -16,10 +16,10 @@ function CheckJava {
         Write-Host ""
         if (($JavaVersion | Select-Object Major | Out-String) -notmatch 8) {
             Write-Host "Recommend Java Version 8" -ForegroundColor Yellow
-            $confirmation_install_java = Read-Host "Do you want install java 8 64 bit (y/n)"
-            if ($confirmation_install_java -eq 'y') {
-                Install-Java
-            }
+            # $confirmation_install_java = Read-Host "Do you want install java 8 64 bit (y/n)"
+            # if ($confirmation_install_java -eq 'y') {
+            #     Install-Java
+            # }
         }
     }
     else {
@@ -49,17 +49,19 @@ function Install-Fabric {
     Write-Host "Install Fabric API For 1.18.2" -ForegroundColor Yellow
     if (Test-Path -Path "$($env:APPDATA)\.minecraft\mods") {
         Write-Host "Found Mods folder" -ForegroundColor Green
-        $confirmation_delete_mods_folder = Read-Host "Do you want delete mods folder (y/n)"
+        $confirmation_delete_mods_folder = Read-Host "Do you want delete old mods/config folder (y/n)"
         if ($confirmation_delete_mods_folder -eq 'y') {
-            Remove-Item "$($env:APPDATA)\.minecraft\config" -Force -Recurse | Out-Null
-            Remove-Item "$($env:APPDATA)\.minecraft\kubejs" -Force -Recurse | Out-Null
-            Remove-Item "$($env:APPDATA)\.minecraft\paintings" -Force -Recurse | Out-Null
-            Remove-Item "$($env:APPDATA)\.minecraft\mods" -Force -Recurse | Out-Null
+            $oldfile = @('mods', 'config', 'kubejs', 'paintings')
+            Foreach ($file in $oldfile) {
+                if (Test-Path -Path "$($env:APPDATA)\.minecraft\$file") {
+                    Remove-Item "$($env:APPDATA)\.minecraft\$file" -Force -Recurse | Out-Null
+                }
+            }
         }
     }
     New-Item -ItemType Directory -Force -Path "$($env:APPDATA)\.minecraft\mods" | Out-Null
     Write-Host "Download Mods.." -ForegroundColor Yellow
-    Start-BitsTransfer -Source "https://github.com/Faelayis/mc-mod-packs/releases/download/Part-1/Valhelsia.Enhanced.Vanilla.zip" -Destination "mods.zip"
+    Start-BitsTransfer -Priority High -Source "https://github.com/Faelayis/mc-mod-packs/releases/download/Part-1/Valhelsia.Enhanced.Vanilla.zip" -Destination "mods.zip"
     Write-Host "Unzip Mods" -ForegroundColor Yellow
     Expand-Archive -Path '.\mods.zip' -DestinationPath "$($env:APPDATA)\.minecraft" -Force
     Write-Host "Done." -ForegroundColor Green
